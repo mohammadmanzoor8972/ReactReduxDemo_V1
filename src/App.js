@@ -28,8 +28,11 @@ class App extends React.Component {
             }}
           />
           <button
-            onClick={() => {
+            onClick={e => {
+              e.preventDefault();
+
               this.props.addNote(this.state.title, this.state.content);
+              this.setState({ title: "", content: "" });
               this.element.current.focus();
             }}
           >
@@ -59,7 +62,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    notes: state.notes
+    notes: state.notes,
+    visibility: state.visibility
   };
 };
 
