@@ -1,25 +1,10 @@
-import { ADD_NOTE } from "../Action/";
+import noteReducer from "./noteReducer";
+import visibilityReducer from "./visibilityReducer";
+import { combineReducers } from "redux";
 
-const initialState = {
-  notes: []
-};
-
-function rootReducer(state = initialState, action) {
-  switch (action.type) {
-    case ADD_NOTE:
-      return {
-        notes: [
-          ...state.notes,
-          {
-            title: action.title,
-            content: action.content
-          }
-        ]
-      };
-
-    default:
-      return state;
-  }
-}
+const rootReducer = combineReducers({
+  notes: noteReducer,
+  visibility: visibilityReducer
+});
 
 export default rootReducer;

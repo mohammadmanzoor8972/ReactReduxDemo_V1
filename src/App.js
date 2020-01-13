@@ -1,13 +1,13 @@
 import React from "react";
 import "./styles.css";
-
-const noteList = [];
+import { connect } from "react-redux";
+import { addNote, removeNote } from "./Action";
 
 class App extends React.Component {
   state = {
-    noteitem: "",
-    noteId: new Date().getTime(),
-    noteList: ["test", "ram"]
+    id: "",
+    title: "",
+    content: ""
   };
 
   element = React.createRef();
@@ -21,27 +21,32 @@ class App extends React.Component {
           <label>Notes</label>
           <input
             type="text"
-            value={this.state.noteitem}
+            value={this.state.content}
             ref={this.element}
             onChange={({ target }) => {
-              this.setState({ noteitem: target.value });
+              this.setState({ content: target.value });
             }}
           />
           <button
             onClick={() => {
-              debugger;
-              this.setState({
-                noteList: [...this.state.noteList, this.state.noteitem],
-                noteitem: ""
-              });
+              this.props.addNote(this.state.title, this.state.content);
               this.element.current.focus();
             }}
           >
             Add
           </button>
           <ul>
-            {this.state.noteList.map(note => {
-              return <li>{note}</li>;
+            {this.props.notes.map(note => {
+              return (
+                <li
+                  key={note.id}
+                  onClick={() => {
+                    this.props.removeNote(note.id);
+                  }}
+                >
+                  {note.content}
+                </li>
+              );
             })}
           </ul>
         </div>
@@ -50,5 +55,20 @@ class App extends React.Component {
   }
 }
 
-export default App;
-const notesItem = ({ note }) => <li>{note}</li>;
+//export default App;
+
+const mapStateToProps = state => {
+  return {
+    notes: state.notes
+  };
+};
+
+const mapDispatchToProps = {
+  addNote: addNote,
+  removeNote: removeNote
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

@@ -1,5 +1,11 @@
-export const ADD_NOTE = "ADD_NOTE";
+import { ADD_NOTE, REMOVE_NOTE, addNote, removeNote } from "./noteAction";
+import { SHOW_ALL, visibilityFilter } from "./visibilityAction";
 
-export function addNote(title, content) {
-  return { type: ADD_NOTE, title: title, content: content };
-}
+export {
+  ADD_NOTE,
+  REMOVE_NOTE,
+  SHOW_ALL,
+  addNote,
+  removeNote,
+  visibilityFilter
+};
